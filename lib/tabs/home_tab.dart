@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flappy_search_bar/scaled_tile.dart';
+import 'dart:math';
 
 class Post {
   final String title;
@@ -20,6 +22,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
     super.initState();
     print('initState Home');
   }
+  final SearchBarController<Post> _searchBarController = SearchBarController();
   
   @override
   Widget build(BuildContext context) {
@@ -41,15 +44,17 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
                 new Container(
                   padding: const EdgeInsets.only(bottom: 8, top: 7),
                   child: new Text(
-                    'COVID-19 | 我们的响应',
+                    'COVID-19 | Our Response',                    
                     style: new TextStyle(
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 new Text(
-                  '疫情期间我们将全力满足客户的需求及保障客户的安全。',
+                  'During the epidemic, we will do our best to meet customer needs and ensure customer safety.',
                   style: new TextStyle(
+                    fontFamily: 'Poppins',
                     color: Colors.grey[500],
                   ),
                 ),
@@ -78,6 +83,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
             'lake, which warms to 20 degrees Celsius in the summer. Activities '
             'enjoyed here include rowing, and riding the summer toboggan run.',
         softWrap: true,
+        style: new TextStyle(
+          fontFamily: 'Poppins',
+          color: Colors.grey[500],
+        ),
       ),
       
     );
@@ -113,38 +122,25 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
       child: Row (
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(color, Icons.free_breakfast, '满35免运费'),
-          _buildButtonColumn(color, Icons.local_shipping, '7天送货上门'),
-          _buildButtonColumn(color, Icons.money_off, '无理由退换货'),
+          _buildButtonColumn(color, Icons.free_breakfast, 'Free ship over \$35'),
+          _buildButtonColumn(color, Icons.local_shipping, 'Delivery within 7 days'),
+          _buildButtonColumn(color, Icons.money_off, 'No reason to return'),
         ],
       ),
     );
 
     // Swiper Images
     Widget innerSwiper = Container(
+      margin: const EdgeInsets.only(top:0),
       decoration: BoxDecoration(
         color: Colors.white,
       ),
       child: new Swiper(
         itemBuilder: (BuildContext context,int index){
-          return new Image.asset('assets/images/b4.png', fit: BoxFit.fill,);
+          return new Image.asset('assets/images/b5.png', fit: BoxFit.fill,);
         },
         autoplay: true,
-        itemCount: 3,
-        // itemWidth: 300,
-        // layout: SwiperLayout.CUSTOM,
-        // customLayoutOption: new CustomLayoutOption(
-        //     startIndex: -1,
-        //     stateCount: 3
-        // ).addRotate([
-        //   -45.0/180,
-        //   0.0,
-        //   45.0/180
-        // ]).addTranslate([
-        //   new Offset(-370.0, -40.0),
-        //   new Offset(0.0, 0.0),
-        //   new Offset(370.0, -40.0)
-        // ]),
+        itemCount: 6,
         pagination: new SwiperPagination(),
         control: new SwiperControl(
           size: 0,
@@ -160,7 +156,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
       decoration: BoxDecoration(
         color: Colors.white,
       ),
-      child: Image.asset('assets/images/b4.png', fit: BoxFit.fill),
+      child: Image.asset('assets/images/b5.png', fit: BoxFit.fill),
       height: 150,
     );
 
@@ -177,22 +173,23 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
             childAspectRatio: 1.4 //宽高比为1时，子widget
         ),
         children:<Widget>[
-          _buildButtonColumn(Colors.green, Icons.public, '水果'),
-          _buildButtonColumn(Colors.green, Icons.public, '蔬菜'),
-          _buildButtonColumn(Colors.green, Icons.public, '肉类'),
-          _buildButtonColumn(Colors.green, Icons.public, '海鲜'),
-          _buildButtonColumn(Colors.green, Icons.public, '餐馆菜'),
-          _buildButtonColumn(Colors.green, Icons.public, '面食点心'),
-          _buildButtonColumn(Colors.green, Icons.public, '方便食品'),
-          _buildButtonColumn(Colors.green, Icons.public, '烘焙'),
-          _buildButtonColumn(Colors.green, Icons.public, '零食饮料'),
-          _buildButtonColumn(Colors.green, Icons.public, '蛋奶豆制'),
+          _buildButtonColumn(Colors.green, Icons.public, 'fruit'),
+          _buildButtonColumn(Colors.green, Icons.public, 'vegetable'),
+          _buildButtonColumn(Colors.green, Icons.public, 'meat'),
+          _buildButtonColumn(Colors.green, Icons.public, 'seafood'),
+          _buildButtonColumn(Colors.green, Icons.public, 'dish food'),
+          _buildButtonColumn(Colors.green, Icons.public, 'snack'),
+          _buildButtonColumn(Colors.green, Icons.public, 'Micro food'),
+          _buildButtonColumn(Colors.green, Icons.public, 'baking'),
+          _buildButtonColumn(Colors.green, Icons.public, 'beverage'),
+          _buildButtonColumn(Colors.green, Icons.public, 'milk'),
         ]
       ),
       height: 140,
     );
     return MaterialApp(
       home: Scaffold (
+        resizeToAvoidBottomInset:false,
         backgroundColor: Colors.grey[100],
         appBar: new AppBar(
           backgroundColor: Colors.green,
@@ -208,6 +205,24 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
         ),
         body: ListView(
           children:<Widget> [
+            Container (
+              height: 80,
+              child: SearchBar<Post>(
+                searchBarPadding: EdgeInsets.symmetric(horizontal: 5),
+                headerPadding: EdgeInsets.symmetric(horizontal: 5),
+                listPadding: EdgeInsets.symmetric(horizontal: 5),
+                onSearch: null,
+                searchBarController: _searchBarController,
+                cancellationWidget: Text("cancel"),
+                indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
+                header: Row(
+                ),
+                icon: Icon(Icons.search, color: Colors.grey),
+                iconActiveColor:Colors.orange,
+                hintText:'Find some staff...',
+                onItemFound: null,
+              ),
+            ),
             innerSwiper,
             buttonSection,
             titleSection,
@@ -222,4 +237,24 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class Detail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('detail!');
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            Text("Detail"),
+          ],
+        ),
+      ),
+    );
+  }
 }
