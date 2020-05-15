@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-class CategoryTab extends StatefulWidget {
+class ShopTab extends StatefulWidget {
   @override
-  _CategoryTabState createState() => _CategoryTabState();
+  _ShopTabState createState() => _ShopTabState();
 }
 
-class _CategoryTabState extends State<CategoryTab> with AutomaticKeepAliveClientMixin<CategoryTab> {
+class _ShopTabState extends State<ShopTab> with AutomaticKeepAliveClientMixin<ShopTab> {
   @override
   void initState() {
     super.initState();
-    print('initState Category Tab');
+    print('initState Shop Tab');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build Category Tab');
+    print('build Shop Tab');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Category'),
+        title: Text('Shop'),
         backgroundColor: Colors.green,
       ),
       body: Center(
         child: Text(
-          'This is content of Category',
+          'This is content of Shop',
         ),
       ),
     );

@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import '../utils/CustomBorder.dart';
-
-
-class Post {
-  final String title;
-  final String body;
-
-  Post(this.title, this.body);
-}
 
 class HomeTab extends StatefulWidget {
   @override
@@ -22,8 +12,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
     super.initState();
     print('initState Home');
   }
-  final SearchBarController<Post> _searchBarController = SearchBarController();
   
+  // title secontion
   @override
   Widget build(BuildContext context) {
     Widget titleSection = new Container(
@@ -105,6 +95,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
+                fontFamily: 'BalsamiqSans',
                 color: color,
               ),
             ),
@@ -129,7 +120,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
       ),
     );
 
-    // Swiper Images
     Widget innerSwiper = Container(
       margin: const EdgeInsets.only(top:0),
       decoration: BoxDecoration(
@@ -215,18 +205,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   hintText: "Search some staff...",
-                  enabledBorder: CustomBorder.enabledBorder.copyWith(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(0))),
-                  contentPadding: EdgeInsets.only(
-                      top: 16, left: 12, right: 12, bottom: 8),
-                  border: CustomBorder.enabledBorder.copyWith(
-                      borderSide: BorderSide(color: Colors.white),
-                  ),
                   enabled: true,
                   filled: true,
-                  
                 ),
               ),
             ),
@@ -244,24 +224,4 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class Detail extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    print('detail!');
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            Text("Detail"),
-          ],
-        ),
-      ),
-    );
-  }
 }

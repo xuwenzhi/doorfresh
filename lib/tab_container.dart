@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'tabs/home_tab.dart';
-import 'tabs/category_tab.dart';
+import 'tabs/shop_tab.dart';
 import 'tabs/cart_tab.dart';
 import 'tabs/profile_tab.dart';
 
@@ -28,9 +28,9 @@ class _TabContainerState extends State<TabContainer> {
 
     originalList = [
       HomeTab(),
-      CategoryTab(),
+      ShopTab(),
       CartTab(),
-      Profile(),
+      ProfileTab(),
     ];
     originalDic = {0: true, 1: false, 2: false, 3: false};
     listScreens = [originalList.first];
@@ -42,7 +42,7 @@ class _TabContainerState extends State<TabContainer> {
     return MaterialApp(
       color: Colors.yellow,
       home: Scaffold(
-        body: IndexedStack(index: tabIndex, children: listScreens),
+        body: IndexedStack(index: tabIndex, children: originalList),
         bottomNavigationBar: _buildTabBar(),
         backgroundColor: Theme.of(context).primaryColor,
       ),

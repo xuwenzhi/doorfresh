@@ -27,7 +27,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   flutter_swiper: ^1.1.6
   http: ^0.12.1
-  flappy_search_bar: ^1.7.2
+  custom_splash: ^0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +51,14 @@ flutter:
     - assets/images/b3.jpg
     - assets/images/b4.png
     - assets/images/b5.png
+    - assets/images/beauty.jpg
+    - assets/images/ic_about_us.png
+    - assets/images/ic_invite_friends.png
+    - assets/images/ic_logout.png
+    - assets/images/ic_payment.png
+    - assets/images/ic_settings.png
+    - assets/images/ic_notification.png
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
