@@ -67,9 +67,9 @@ class _TabContainerState extends State<TabContainer> {
   Widget _buildTabBar() {
     var listItems = [
       BottomAppBarItem(iconData: Icons.home, text: 'Home'),
-      BottomAppBarItem(iconData: Icons.shopping_basket, text: 'Category'),
+      BottomAppBarItem(iconData: Icons.shopping_basket, text: 'Shop'),
       BottomAppBarItem(iconData: Icons.shopping_cart, text: 'Cart'),
-      BottomAppBarItem(iconData: Icons.person, text: 'Profile'),
+      BottomAppBarItem(iconData: Icons.person, text: 'Me'),
     ];
 
     var items = List.generate(listItems.length, (int index) {

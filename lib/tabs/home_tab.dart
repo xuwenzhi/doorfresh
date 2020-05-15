@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
-import 'dart:math';
+import '../utils/CustomBorder.dart';
+
 
 class Post {
   final String title;
@@ -46,7 +46,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
                   child: new Text(
                     'COVID-19 | Our Response',                    
                     style: new TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'BalsamiqSans',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -54,7 +54,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
                 new Text(
                   'During the epidemic, we will do our best to meet customer needs and ensure customer safety.',
                   style: new TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'BalsamiqSans',
                     color: Colors.grey[500],
                   ),
                 ),
@@ -84,7 +84,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
             'enjoyed here include rowing, and riding the summer toboggan run.',
         softWrap: true,
         style: new TextStyle(
-          fontFamily: 'Poppins',
+          fontFamily: 'BalsamiqSans',
           color: Colors.grey[500],
         ),
       ),
@@ -193,7 +193,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
         backgroundColor: Colors.grey[100],
         appBar: new AppBar(
           backgroundColor: Colors.green,
-          title: Text('DoorFresh'),
+          title: Text('DoorFresh',
+            style: TextStyle(
+              fontFamily: 'BalsamiqSans',
+            ),
+          ),
           leading: Builder(builder: (context) {
             return IconButton(
               icon: Icon(Icons.restaurant, color: Colors.white), //自定义图标
@@ -205,22 +209,25 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
         ),
         body: ListView(
           children:<Widget> [
-            Container (
-              height: 80,
-              child: SearchBar<Post>(
-                searchBarPadding: EdgeInsets.symmetric(horizontal: 5),
-                headerPadding: EdgeInsets.symmetric(horizontal: 5),
-                listPadding: EdgeInsets.symmetric(horizontal: 5),
-                onSearch: null,
-                searchBarController: _searchBarController,
-                cancellationWidget: Text("cancel"),
-                indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-                header: Row(
+            Container(
+              margin: const EdgeInsets.only(),
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  hintText: "Search some staff...",
+                  enabledBorder: CustomBorder.enabledBorder.copyWith(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(0))),
+                  contentPadding: EdgeInsets.only(
+                      top: 16, left: 12, right: 12, bottom: 8),
+                  border: CustomBorder.enabledBorder.copyWith(
+                      borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabled: true,
+                  filled: true,
+                  
                 ),
-                icon: Icon(Icons.search, color: Colors.grey),
-                iconActiveColor:Colors.orange,
-                hintText:'Find some staff...',
-                onItemFound: null,
               ),
             ),
             innerSwiper,

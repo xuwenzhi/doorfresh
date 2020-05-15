@@ -68,6 +68,10 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
+    - family: BalsamiqSans
+      fonts:
+        - asset: assets/fonts/BalsamiqSans-Regular.ttf
+          weight: 600
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -23,7 +23,6 @@ class _CategoryTabState extends State<CategoryTab> with AutomaticKeepAliveClient
       body: Center(
         child: Text(
           'This is content of Category',
-          style: TextStyle(fontSize: 30),
         ),
       ),
     );
