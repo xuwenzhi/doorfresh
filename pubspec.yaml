@@ -28,6 +28,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   http: ^0.12.1
   custom_splash: ^0.0.2
+  localstorage: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,7 @@ flutter:
     - assets/images/ic_payment.png
     - assets/images/ic_settings.png
     - assets/images/ic_notification.png
+    - assets/images/recommend.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

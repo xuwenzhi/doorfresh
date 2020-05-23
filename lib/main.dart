@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       home: CustomSplash(
         imagePath: 'assets/images/beauty.jpg',
         backGroundColor: Colors.pinkAccent,
-        animationEffect: 'zoom-out',
+        animationEffect: 'zoom-in',
         logoSize: 1800,
         home: TabContainer(),
         customFunction: null,

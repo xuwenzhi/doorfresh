@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
+import 'search/search.dart';
+import '../models/fresh_recommend_list.dart';
+import '../models/fresh_types_list.dart';
 class HomeTab extends StatefulWidget {
   @override
   _HomeTabState createState() => _HomeTabState();
@@ -12,10 +14,33 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
     super.initState();
     print('initState Home');
   }
+
   
-  // title secontion
+  
   @override
   Widget build(BuildContext context) {
+
+    // Search Textfield
+    Widget searchSection = Container(
+      margin: const EdgeInsets.only(),
+      child: TextField(
+        //showCursor: true,
+        readOnly: true,
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchPage()),
+          );
+        },
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          hintText: "Search some staff...",
+          enabled: true,
+          filled: true,
+        ),
+      ),
+    );
+
     Widget titleSection = new Container(
       margin: const EdgeInsets.only(bottom: 6, top: 2),
       decoration: BoxDecoration(
@@ -78,7 +103,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
           color: Colors.grey[500],
         ),
       ),
-      
     );
 
     Column _buildButtonColumn(Color color, IconData icon, String label) {
@@ -150,33 +174,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
       height: 150,
     );
 
-    Widget categories = Container(
-      margin: const EdgeInsets.only(bottom: 5, top: 0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.only(bottom: 8, top: 8),
-      child: GridView(
-        controller: new ScrollController(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5, //横轴三个子widget
-            childAspectRatio: 1.4 //宽高比为1时，子widget
-        ),
-        children:<Widget>[
-          _buildButtonColumn(Colors.green, Icons.public, 'fruit'),
-          _buildButtonColumn(Colors.green, Icons.public, 'vegetable'),
-          _buildButtonColumn(Colors.green, Icons.public, 'meat'),
-          _buildButtonColumn(Colors.green, Icons.public, 'seafood'),
-          _buildButtonColumn(Colors.green, Icons.public, 'dish food'),
-          _buildButtonColumn(Colors.green, Icons.public, 'snack'),
-          _buildButtonColumn(Colors.green, Icons.public, 'Micro food'),
-          _buildButtonColumn(Colors.green, Icons.public, 'baking'),
-          _buildButtonColumn(Colors.green, Icons.public, 'beverage'),
-          _buildButtonColumn(Colors.green, Icons.public, 'milk'),
-        ]
-      ),
-      height: 140,
-    );
+    Widget types     = FreshTypeList();
+    Widget recommend = FreshRecommendList();
+
     return MaterialApp(
       home: Scaffold (
         resizeToAvoidBottomInset:false,
@@ -195,27 +195,17 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
               },
             );
           }),
-          
         ),
         body: ListView(
           children:<Widget> [
-            Container(
-              margin: const EdgeInsets.only(),
-              child: TextField(
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  hintText: "Search some staff...",
-                  enabled: true,
-                  filled: true,
-                ),
-              ),
-            ),
+            searchSection,
             innerSwiper,
             buttonSection,
+            types,
             titleSection,
-            categories,
             imageTip,
             textSection,
+            recommend,
           ],
         ),
       ),
