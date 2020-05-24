@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:localstorage/localstorage.dart';
 
 import '../struct/fresh_item.dart';
+import '../tabs/fresh/fresh_detail.dart';
+import '../utils/CustomTextStyle.dart';
+
 
 
 class FreshRecommendList extends StatefulWidget{
@@ -24,7 +27,6 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
   @override
   initState() {
     super.initState();
-
     String s = storage.getItem('recommend') ?? "";
     if (s == "") {
       print("Recommend fresh list get from server.");
@@ -69,6 +71,9 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
             id: postsData[i]['id'],
             title: postsData[i]['title'],
             cover_image: postsData[i]['cover_image'],
+            price: postsData[i]['price'],
+            price_unit: postsData[i]['price_unit'],
+            show_price: postsData[i]['show_price'],
             tags: tags);
         fetchedPosts.add(item);
       }
@@ -77,7 +82,6 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
       print("Recomment write to local storage end..");
       setState(() {
         _posts = fetchedPosts;
-        //
         _isLoading = false;
       });
     }).catchError((Object error) {
@@ -92,6 +96,70 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
     return fetchPosts();
   }
 
+  Widget buildTag(FreshTag e) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            e.name,
+            style: TextStyle(
+              fontSize: 15,
+              fontFamily: 'BalsamiqSans',
+              color: CustomTextStyle.hexToColor(e.color),
+              backgroundColor: CustomTextStyle.hexToColor(e.back_color),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  
+
+  Widget buildTags(index) {
+    
+    var tags = new List<Widget>.generate(_posts[index].tags.length, (int i) {
+      return buildTag(_posts[index].tags[i]);
+    });
+    return new Container(
+      alignment: Alignment.centerLeft,
+      child: GridView(
+        // prevent scrollable
+        physics: new NeverScrollableScrollPhysics(),
+        controller: new ScrollController(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, //横轴三个子widget
+            childAspectRatio: 2 //宽高比为1时，子widget
+        ),
+        children: tags,
+      ),
+      height:20,
+    );
+  }
+
+  Widget buildPrice(FreshItem fresh)
+  {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          new Container(
+            padding: const EdgeInsets.only(bottom: 8, top: 7),
+            child: new Text(
+              fresh.show_price,
+              style: new TextStyle(
+                fontFamily: 'BalsamiqSans',
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -100,25 +168,26 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
             )
           : Container(
       //key: _refreshIndicatorKey,
-      margin: const EdgeInsets.only(bottom: 6, top: 8),
+      //margin: const EdgeInsets.only(bottom: 1, top: 1),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
-          bottom: BorderSide(width: 2.0, color: Colors.grey[200]),
+          bottom: BorderSide(width: 1.0, color: Colors.grey[200]),
         ),
       ),
       child: ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        itemCount: _posts.length,
+        itemCount: _posts.length+1,
         itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
+          index = index - 1;
+          if (index == -1) {
             return Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0, left: 10.0, bottom: 10.0),
+                      padding: const EdgeInsets.only(top: 15.0, left: 10.0, bottom: 15.0),
                       child: Text(
                         'Guess you like..',
                         style: TextStyle(
@@ -130,16 +199,44 @@ class _FreshRecommendListState extends State<FreshRecommendList> {
               ],
             );
           }
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(_posts[index].cover_image),
+          return Card(
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              leading: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {},
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  padding: EdgeInsets.symmetric(vertical: 1.0),
+                  alignment: Alignment.center,
+                  child: Image(
+                    image: NetworkImage(
+                      _posts[index].cover_image,
+                    ),
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              ),
+              title: Text(
+                _posts[index].title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              dense: false,
+              subtitle: Column(
+                children: <Widget> [
+                  buildTags(index),
+                  buildPrice(_posts[index]),
+              ]),
+              trailing:
+                  Icon(Icons.keyboard_arrow_right, size: 30.0),
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => FreshDetailPage(int.parse(_posts[index].id))));
+              },
+              isThreeLine: true,
             ),
-            title: Text(_posts[index].title),
-            subtitle: Text(_posts[index].title),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              print('horse $index');
-            },
           );
         },
       ),

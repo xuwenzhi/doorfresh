@@ -21,4 +21,8 @@ class CustomTextStyle {
 
   static var textFormFieldBlack =
       textFormFieldRegular.copyWith(fontWeight: FontWeight.w900);
+
+  static Color hexToColor(String code) {
+    return new Color(int.parse(code, radix: 16) + 0xFF000000);
+  }
 }

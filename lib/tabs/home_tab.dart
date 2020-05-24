@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'search/search.dart';
 import '../models/fresh_recommend_list.dart';
 import '../models/fresh_types_list.dart';
+import '../models/home_swiper.dart';
 class HomeTab extends StatefulWidget {
   @override
   _HomeTabState createState() => _HomeTabState();
@@ -144,25 +145,26 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin<Ho
       ),
     );
 
-    Widget innerSwiper = Container(
-      margin: const EdgeInsets.only(top:0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: new Swiper(
-        itemBuilder: (BuildContext context,int index){
-          return new Image.asset('assets/images/b5.png', fit: BoxFit.fill,);
-        },
-        autoplay: true,
-        itemCount: 6,
-        pagination: new SwiperPagination(),
-        control: new SwiperControl(
-          size: 0,
-        ),
-        outer: false,
-      ),
-      height: 200,
-    );
+    Widget innerSwiper = HomeSwiper();
+    // Widget innerSwiper = Container(
+    //   margin: const EdgeInsets.only(top:0),
+    //   decoration: BoxDecoration(
+    //     color: Colors.white,
+    //   ),
+    //   child: new Swiper(
+    //     itemBuilder: (BuildContext context,int index){
+    //       return new Image.asset('assets/images/b5.png', fit: BoxFit.fill,);
+    //     },
+    //     autoplay: true,
+    //     itemCount: 6,
+    //     pagination: new SwiperPagination(),
+    //     control: new SwiperControl(
+    //       size: 0,
+    //     ),
+    //     outer: false,
+    //   ),
+    //   height: 200,
+    // );
 
     // Image Tip
     Widget imageTip = Container(

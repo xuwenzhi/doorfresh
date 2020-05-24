@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 
 
@@ -6,12 +5,18 @@ class FreshItem {
     String id;
     String title;
     String cover_image;
+    String price;
+    String price_unit;
+    String show_price;
     List<FreshTag> tags;
 
     FreshItem({
         this.id,
         this.title,
         this.cover_image,
+        this.price,
+        this.price_unit,
+        this.show_price,
         this.tags,
     });
 
@@ -19,6 +24,9 @@ class FreshItem {
         id: json["id"],
         title: json["title"],
         cover_image: json["cover_image"],
+        price: json["price"],
+        price_unit: json["price_unit"],
+        show_price: json["show_price"],
         tags: List<FreshTag>.from(json["tags"].map((x) => FreshTag.fromJson(x))),
     );
 
@@ -26,6 +34,9 @@ class FreshItem {
         "id": id,
         "title": title,
         "cover_image": cover_image,
+        "price" : price,
+        "price_unit": price_unit,
+        "show_price" : show_price,
         "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
     };
 
